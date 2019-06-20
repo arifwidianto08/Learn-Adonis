@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -7,7 +7,7 @@
 |
 */
 
-const Route = use('Route')
+const Route = use('Route');
 
 Route.group('user', () => {
   /**
@@ -27,7 +27,7 @@ Route.group('user', () => {
    *           items:
    *               $ref: '#/components/schemas/User'
    */
-  // Route.get('/', 'Api/UsersController.index')
+  Route.get('/', 'Api/UsersController.index');
 
   /**
    * \@swagger
@@ -48,7 +48,7 @@ Route.group('user', () => {
    *         schema:
    *           $ref: '#/components/schemas/User'
    */
-  // Route.post('/', 'Api/UsersController.store')
+  Route.post('/', 'Api/UsersController.store');
 
   /**
    * @swagger
@@ -68,8 +68,7 @@ Route.group('user', () => {
    *       404:
    *         $ref: '#/components/responses/NotFound'
    */
-  Route.get('/:id', 'Api/UsersController.show')
-    .instance('App/Models/User')
+  Route.get('/:id', 'Api/UsersController.show').instance('App/Models/User');
 
   /**
    * @swagger
@@ -103,7 +102,7 @@ Route.group('user', () => {
   Route.put('/:id', 'Api/UsersController.update')
     .middleware(['auth:jwt'])
     .instance('App/Models/User')
-    .validator('UpdateUser')
+    .validator('UpdateUser');
 
   /**
    * @swagger
@@ -124,7 +123,7 @@ Route.group('user', () => {
    */
   Route.delete('/:id', 'Api/UsersController.destroy')
     .middleware(['auth:jwt'])
-    .instance('App/Models/User')
+    .instance('App/Models/User');
 
   /**
    * @swagger
@@ -163,27 +162,30 @@ Route.group('user', () => {
    */
   Route.post('/:id/upload', 'Api/UsersController.upload')
     .middleware(['auth:jwt'])
-    .instance('App/Models/User')
+    .instance('App/Models/User');
 
   /**
-    * @\swagger
-    * /users/{id}/images/{imageId}/setFeatured:
-    *   put:
-    *     tags:
-    *       - User
-    *     summary: set featured image
-    *     parameters:
-    *       - $ref: '#/components/parameters/Id'
-    *       - name: imageId
-    *         description: Id of Image object
-    *         in:  path
-    *         required: true
-    *         type: string
-    *     responses:
-    *       200:
-    *         description: update success
-    */
-  // Route.put('/:id/images/:imageId/setFeatured', 'Api/UsersController.setFeatured').middleware(['auth:jwt', 'instance:App/Models/User'])
+   * @\swagger
+   * /users/{id}/images/{imageId}/setFeatured:
+   *   put:
+   *     tags:
+   *       - User
+   *     summary: set featured image
+   *     parameters:
+   *       - $ref: '#/components/parameters/Id'
+   *       - name: imageId
+   *         description: Id of Image object
+   *         in:  path
+   *         required: true
+   *         type: string
+   *     responses:
+   *       200:
+   *         description: update success
+   */
+  Route.put(
+    '/:id/images/:imageId/setFeatured',
+    'Api/UsersController.setFeatured'
+  ).middleware(['auth:jwt', 'instance:App/Models/User']);
 
   /**
    * @swagger
@@ -211,7 +213,7 @@ Route.group('user', () => {
    */
   Route.delete('/:id/images/:imageId', 'Api/UsersController.deleteImage')
     .middleware(['auth:jwt'])
-    .instance('App/Models/User')
+    .instance('App/Models/User');
 
   /**
    * @swagger
@@ -232,6 +234,7 @@ Route.group('user', () => {
    *       404:
    *         $ref: '#/components/responses/NotFound'
    */
-  Route.get('/:id/images', 'Api/UsersController.images')
-    .instance('App/Models/User')
-}).prefix('/api/users')
+  Route.get('/:id/images', 'Api/UsersController.images').instance(
+    'App/Models/User'
+  );
+}).prefix('/api/users');

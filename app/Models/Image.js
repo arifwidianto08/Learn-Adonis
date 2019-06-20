@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 /** @type {typeof import('lucid-mongo/src/LucidMongo/Model')} */
-const Model = use('Model')
+const Model = use('Model');
 
 /**
  * @swagger
@@ -20,16 +20,16 @@ const Model = use('Model')
  *               type: string
  */
 class Image extends Model {
-  static get rules () {
+  static get rules() {
     return {
       filename: 'required'
-    }
+    };
   }
 
-  static boot () {
-    super.boot()
-    this.addHook('afterDelete', 'App/Models/Hooks/Image.removeFile')
+  static boot() {
+    super.boot();
+    this.addHook('afterDelete', 'App/Models/Hooks/Image.removeFile');
   }
 }
 
-module.exports = Image
+module.exports = Image;
