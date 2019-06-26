@@ -29,11 +29,15 @@ class AuthController extends BaseController {
    *
    */
   async register({ request, response }) {
-    const user = new User(request.only(['name', 'email', 'password']));
+    const user = new User(
+      request.only(['name', 'email', 'password', 'username'])
+    );
     const verificationToken = crypto
       .createHash('sha256')
       .update(uuid.v4())
       .digest('hex');
+    const regiesteredUser = await User.findBy({ email: user.email });
+    console.log(regiesteredUser);
     user.merge({
       verificationToken,
       verified: false
@@ -69,8 +73,8 @@ class AuthController extends BaseController {
     let userData = null;
     try {
       userData = await User.findBy({ email });
-      const isSame = await Hash.verify(password, userData.password);
-      if (isSame) {
+      const checkPassword = await Hash.verify(password, userData.password);
+      if (checkPassword) {
         const jwt = await auth.attempt(email, password);
         data = {
           user: userData,
@@ -78,7 +82,6 @@ class AuthController extends BaseController {
         };
       }
     } catch (error) {
-      console.log(error);
       throw LoginFailedException.invoke('Invalid email or password');
     }
     // if (!data.user.verified) {

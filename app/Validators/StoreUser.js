@@ -5,7 +5,7 @@ const BaseValidator = require('./BaseValidator');
 class StoreUser extends BaseValidator {
   get rules() {
     return {
-      username: 'required|min:5|max:100',
+      username: `required|min:5|max:100|unique:users,username`,
       name: 'required|min:2|max:100',
       email: `required|email|unique:users,email`,
       phone: 'numeric',

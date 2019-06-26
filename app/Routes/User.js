@@ -100,7 +100,7 @@ Route.group('user', () => {
    *         $ref: '#/components/responses/ValidateFailed'
    */
   Route.put('/:id', 'Api/UsersController.update')
-    .middleware(['auth:jwt'])
+    //.middleware(['auth:jwt'])
     .instance('App/Models/User')
     .validator('UpdateUser');
 
@@ -122,7 +122,7 @@ Route.group('user', () => {
    *         $ref: '#/components/responses/Unauthorized'
    */
   Route.delete('/:id', 'Api/UsersController.destroy')
-    .middleware(['auth:jwt'])
+    //.middleware(['auth:jwt'])
     .instance('App/Models/User');
 
   /**

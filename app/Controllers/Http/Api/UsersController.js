@@ -23,7 +23,9 @@ class UsersController extends BaseController {
    * @param {Response} ctx.response
    */
   async index({ request, response, decodeQuery }) {
-    const users = await User.query(decodeQuery()).fetch();
+    // const users = await User.query(decodeQuery()).fetch();
+    const users = await User.all();
+    console.log(JSON.stringify(users));
     return response.apiCollection(users);
   }
 
@@ -97,9 +99,10 @@ class UsersController extends BaseController {
    */
   async destroy({ request, response, instance, auth }) {
     const user = instance;
-    if (String(auth.user._id) !== String(user._id)) {
-      throw UnAuthorizeException.invoke();
-    }
+    // if (String(auth.user._id) !== String(user._id)) {
+    //   throw UnAuthorizeException.invoke();
+    // }
+    console.log(user);
     await user.delete();
     return response.apiDeleted();
   }
