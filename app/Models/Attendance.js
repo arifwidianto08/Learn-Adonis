@@ -7,6 +7,10 @@ class Attendance extends Model {
   static boot() {
     super.boot();
   }
+
+  static get hidden() {
+    return ['password'];
+  }
 }
 
 module.exports = Attendance;

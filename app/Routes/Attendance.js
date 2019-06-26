@@ -17,4 +17,8 @@ Route.group(() => {
   Route.delete('/:id', 'Api/AttendanceController.destroy').instance(
     'App/Models/Attendance'
   );
+
+  Route.put('/:id', 'Api/AttendanceController.update').instance(
+    'App/Models/Attendance'
+  );
 }).prefix('/api/attendance');

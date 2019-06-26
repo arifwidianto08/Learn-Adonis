@@ -52,10 +52,12 @@ class AttendanceController extends BaseController {
     return response.apiCollection(request.all());
   }
 
-  async update({ response, params, request }) {
+  async update({ response,  request,instance }) {
     // obj.response.apiCollection(JSON.stringify(obj));
-
-    response.apiCollection([]);
+    const attendance = instance;
+    instance.merge(request.all());
+    await instance.save()
+    response.apiUpdated(attendance);
   }
 
   async destroy({ response, instance }) {
