@@ -4,9 +4,14 @@
 const BaseController = require('./BaseController');
 /** @type {typeof import('../../../Models/Attendance')} */
 const Attendance = use('App/Models/Attendance');
+const User = use('App/Models/User');
 const Hash = use('Hash');
-const { storeAttendance } = require('../../../Validators/Attendance');
-
+const LoginFailedException = use('App/Exceptions/LoginFailedException');
+const {
+  storeAttendance,
+  checkInValidation,
+  checkOutValidation
+} = require('../../../Validators/Attendance');
 /**
  *
  * @class AttendanceController
@@ -52,11 +57,11 @@ class AttendanceController extends BaseController {
     return response.apiCollection(request.all());
   }
 
-  async update({ response,  request,instance }) {
+  async update({ response, request, instance }) {
     // obj.response.apiCollection(JSON.stringify(obj));
     const attendance = instance;
     instance.merge(request.all());
-    await instance.save()
+    await instance.save();
     response.apiUpdated(attendance);
   }
 
@@ -64,6 +69,52 @@ class AttendanceController extends BaseController {
     const attendance = instance;
     await attendance.delete();
     response.apiDeleted();
+  }
+
+  async login({ request, response, auth }) {
+    const username = request.input('username');
+    const password = request.input('password');
+    await this.validate(request.all(), {
+      username: 'required',
+      password: 'required'
+    });
+    // Attempt to login with username and password
+    let data = null;
+    let userData = null;
+    try {
+      userData = await User.findBy({ username });
+      const checkPassword = await Hash.verify(password, userData.password);
+      if (checkPassword) {
+        const jwt = await auth.attempt(username, password);
+        data = {
+          user: userData,
+          token: jwt.token
+        };
+      }
+    } catch (error) {
+      throw LoginFailedException.invoke('Invalid username or password');
+    }
+    response.apiSuccess(data);
+  }
+
+  async checkIn({ request, response }) {
+    await this.validate(
+      { ...request.all(), checkOutTime: 'unset' },
+      checkInValidation()
+    );
+    const attendance = new Attendance(request.all());
+
+    await attendance.save();
+    return response.apiCreated(attendance);
+  }
+
+  async checkOut({ request, response, instance }) {
+    console.log(request.all());
+    await this.validate(request.all(), checkOutValidation());
+    const attendance = instance;
+    attendance.merge(request.all());
+    await attendance.save();
+    return response.apiUpdated(attendance);
   }
 }
 

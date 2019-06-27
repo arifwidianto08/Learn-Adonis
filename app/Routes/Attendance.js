@@ -21,4 +21,12 @@ Route.group(() => {
   Route.put('/:id', 'Api/AttendanceController.update').instance(
     'App/Models/Attendance'
   );
+
+  Route.post('/login', 'Api/AttendanceController.login');
+
+  Route.post('/check-in', 'Api/AttendanceController.checkIn');
+
+  Route.put('/:id/check-out', 'Api/AttendanceController.checkOut').instance(
+    'App/Models/Attendance'
+  );
 }).prefix('/api/attendance');

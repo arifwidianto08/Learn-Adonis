@@ -7,8 +7,7 @@ const BaseController = require('./BaseController');
 const User = use('App/Models/User');
 const Hash = use('Hash');
 const UnAuthorizeException = use('App/Exceptions/UnAuthorizeException');
-const crypto = require('crypto');
-const uuid = require('uuid');
+const { storeUser } = require('../../../Validators/User');
 /**
  *
  * @class UsersController
@@ -38,22 +37,21 @@ class UsersController extends BaseController {
    * @param {Response} ctx.response
    */
   async store({ request, response }) {
-    // await this.validate(request.all(), Validator.rules());
-    const user = new User(
-      request.only(['username', 'name', 'password', 'phone', 'email'])
-    );
+    await this.validate(request.all(), storeUser());
+    const user = new User(request.all());
+    const username = request.input('username');
+
+    // validate body
+    const usernameExsist = await User.findBy({ username });
+    if (usernameExsist) {
+      return response.unprocessableEntity('Username');
+    }
 
     const password = await Hash.make(request.input('password'));
-    const verificationToken = crypto
-      .createHash('sha256')
-      .update(uuid.v4())
-      .digest('hex');
-
     user.set({
-      password: password,
-      verificationToken: verificationToken,
-      verified: false
+      password: password
     });
+
     await user.save();
     return response.apiCreated(user);
   }

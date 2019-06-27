@@ -69,7 +69,7 @@ module.exports = {
     model: 'App/Models/User',
     token: 'App/Models/Token',
     scheme: 'jwt',
-    uid: 'email',
+    uid: 'username',
     password: 'password',
     // expiry: '30d',
     options: {
