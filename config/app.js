@@ -13,11 +13,7 @@ module.exports = {
   |
   */
   appKey: Env.get('APP_KEY'),
-
-  baseUrl:
-    process.env.NODE_ENV != 'production'
-      ? Env.get('APP_URL')
-      : 'https://e-attendance-backend-staging.herokuapp.com',
+  baseUrl: Env.get('APP_URL'),
 
   http: {
     /*
