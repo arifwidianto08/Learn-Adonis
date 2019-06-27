@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ module.exports = (cli, runner) => {
     | line, if http server is not required
     |
     */
-    use('Adonis/Src/Server').listen(process.env.HOST, process.env.PORT)
+    use('Adonis/Src/Server').listen(process.env.HOST, process.env.PORT || 3333);
 
     /*
     |--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ module.exports = (cli, runner) => {
     |
     */
     // await ace.call('migration:run')
-  })
+  });
 
   runner.after(() => {
     /*
@@ -46,7 +46,9 @@ module.exports = (cli, runner) => {
     | Shutdown the HTTP server when all tests have been executed.
     |
     */
-    use('Adonis/Src/Server').getInstance().close()
+    use('Adonis/Src/Server')
+      .getInstance()
+      .close();
 
     /*
     |--------------------------------------------------------------------------
@@ -58,5 +60,5 @@ module.exports = (cli, runner) => {
     |
     */
     // await ace.call('migration:reset')
-  })
-}
+  });
+};
