@@ -45,7 +45,7 @@ class AttendanceController extends BaseController {
 
     const usernameExsist = await Attendance.findBy({ username });
     if (usernameExsist) {
-      return response.unprocessableEntity('Username');
+      return response.unprocessableEntity('Username already exist');
     }
 
     const password = await Hash.make(request.input('password'));
@@ -110,11 +110,7 @@ class AttendanceController extends BaseController {
       status: 'Checkin'
     });
     if (existingCheckin) {
-      return JSON.stringify({
-        status: 422,
-        message: "the user hasn't checkout",
-        error: 'Unprocessable Entity'
-      });
+      return response.unprocessableEntity("the user hasn't checkout");
     }
     await attendance.save();
     return response.apiCreated(attendance);

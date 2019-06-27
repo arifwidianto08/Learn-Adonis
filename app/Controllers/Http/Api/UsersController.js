@@ -44,7 +44,7 @@ class UsersController extends BaseController {
     // validate body
     const usernameExsist = await User.findBy({ username });
     if (usernameExsist) {
-      return response.unprocessableEntity('Username');
+      return response.unprocessableEntity('Username already exist');
     }
 
     const password = await Hash.make(request.input('password'));

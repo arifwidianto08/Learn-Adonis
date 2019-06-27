@@ -67,11 +67,11 @@ class ExtendResponseProvider extends ServiceProvider {
       });
     });
 
-    Response.macro('unprocessableEntity', function(data) {
+    Response.macro('unprocessableEntity', function(errorMessage) {
       this.status(422).json({
         status: 422,
         code: 'Unprocessable Entity',
-        message: `${data} is already exist`
+        message: `${errorMessage}`
       });
     });
   }
