@@ -4,7 +4,7 @@
   "description": "A boilerplate Rest API build on Adonisjs FW with LucidMongo and swagger-jsdoc Edit",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "ENV_SILENT=true node server.js",
     "test:local": "node ace test --timeout 10000",
     "test": "nyc node ace test --timeout 10000",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
