@@ -1,6 +1,6 @@
-'use strict'
+'use strict';
 
-const Env = use('Env')
+const Env = use('Env');
 
 module.exports = {
   /*
@@ -13,7 +13,8 @@ module.exports = {
   |
   */
   appKey: Env.get('APP_KEY'),
-  baseUrl: Env.get('APP_URL'),
+  baseUrl:
+    Env.get('APP_URL') || 'https://e-attendance-backend-staging.herokuapp.com',
 
   http: {
     /*
@@ -208,4 +209,4 @@ module.exports = {
       level: 'info'
     }
   }
-}
+};
