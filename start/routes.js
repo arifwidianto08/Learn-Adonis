@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +13,10 @@
 |
 */
 /** @type {import('@adonisjs/framework/src/Route/Manager'} */
-const Route = use('Route')
+const Route = use('Route');
 
 Route.get('/', ({ request }) => {
-  return { greeting: 'Hello world in JSON' }
-})
+  return { greeting: 'Hello world in JSON' };
+});
 
-use('require-all')(`${use('Helpers').appRoot()}/app/Routes`)
+use('require-all')(`${use('Helpers').appRoot()}/app/Routes`);
