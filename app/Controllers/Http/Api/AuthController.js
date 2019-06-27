@@ -37,7 +37,6 @@ class AuthController extends BaseController {
       .update(uuid.v4())
       .digest('hex');
     const regiesteredUser = await User.findBy({ email: user.email });
-    console.log(regiesteredUser);
     user.merge({
       verificationToken,
       verified: false

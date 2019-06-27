@@ -24,7 +24,7 @@ class UsersController extends BaseController {
   async index({ request, response, decodeQuery }) {
     // const users = await User.query(decodeQuery()).fetch();
     const users = await User.all();
-    console.log(JSON.stringify(users));
+
     return response.apiCollection(users);
   }
 
