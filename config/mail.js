@@ -1,6 +1,4 @@
-'use strict'
-
-const Env = use('Env')
+'use strict';
 
 module.exports = {
   /*
@@ -12,7 +10,7 @@ module.exports = {
   | define a driver too.
   |
   */
-  connection: Env.get('MAIL_CONNECTION', 'smtp'),
+  // connection: Env.get('MAIL_CONNECTION', 'smtp'),
 
   /*
   |--------------------------------------------------------------------------
@@ -29,13 +27,13 @@ module.exports = {
     host: '',
     secure: false,
     auth: {
-      user: Env.get('MAIL_USERNAME'),
-      pass: Env.get('MAIL_PASSWORD')
+      // user: Env.get('MAIL_USERNAME'),
+      // pass: Env.get('MAIL_PASSWORD')
     },
     maxConnections: 5,
     maxMessages: 100,
     rateLimit: 10
-  },
+  }
 
   /*
   |--------------------------------------------------------------------------
@@ -53,9 +51,9 @@ module.exports = {
   | }
   |
   */
-  sparkpost: {
-    driver: 'sparkpost',
-    apiKey: Env.get('SPARKPOST_API_KEY'),
-    extras: {}
-  }
-}
+  // sparkpost: {
+  //   driver: 'sparkpost',
+  //   apiKey: Env.get('SPARKPOST_API_KEY'),
+  //   extras: {}
+  // }
+};

@@ -18,7 +18,8 @@ function checkInValidation() {
 
 function checkOutValidation() {
   return {
-    checkOutTime: 'required'
+    checkOutTime: 'required',
+    status: 'required'
   };
 }
 

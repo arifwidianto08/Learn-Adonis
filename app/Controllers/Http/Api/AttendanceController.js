@@ -98,18 +98,29 @@ class AttendanceController extends BaseController {
   }
 
   async checkIn({ request, response }) {
-    await this.validate(
-      { ...request.all(), checkOutTime: 'unset' },
-      checkInValidation()
-    );
-    const attendance = new Attendance(request.all());
+    await this.validate(request.all(), checkInValidation());
+    const user_id = request.input('user_id');
+    const attendance = new Attendance({
+      ...request.all(),
+      checkOutTime: 'unset'
+    });
 
+    const existingCheckin = await Attendance.findBy({
+      user_id: user_id,
+      status: 'Checkin'
+    });
+    if (existingCheckin) {
+      return JSON.stringify({
+        status: 422,
+        message: "the user hasn't checkout",
+        error: 'Unprocessable Entity'
+      });
+    }
     await attendance.save();
     return response.apiCreated(attendance);
   }
 
   async checkOut({ request, response, instance }) {
-    console.log(request.all());
     await this.validate(request.all(), checkOutValidation());
     const attendance = instance;
     attendance.merge(request.all());
