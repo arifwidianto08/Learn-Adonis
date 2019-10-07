@@ -1,0 +1,3 @@
+Adonis MongoDB Boilerplate
+
+- HoW TO RUN THIS PROGRAM , open the terminal and yells
